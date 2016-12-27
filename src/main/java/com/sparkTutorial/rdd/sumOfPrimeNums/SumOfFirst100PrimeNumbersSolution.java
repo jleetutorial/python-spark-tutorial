@@ -20,8 +20,8 @@ public class SumOfFirst100PrimeNumbersSolution {
 
         JavaRDD<String> validNumbers = numbers.filter(number -> !number.equals(""));
 
-        String sum = validNumbers.reduce((x, y) -> String.valueOf(Integer.valueOf(x) + Integer.valueOf(y)));
+        JavaRDD<Integer> intNumbers = validNumbers.map(number -> Integer.valueOf(number));
 
-        System.out.println("Sum is: " + sum);
+        System.out.println("Sum is: " + intNumbers.reduce((x, y) -> x + y));
     }
 }
