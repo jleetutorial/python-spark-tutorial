@@ -1,4 +1,4 @@
-package com.sparkTutorial.rdd.count;
+package com.sparkTutorial.rdd.take;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -8,26 +8,21 @@ import org.apache.spark.api.java.JavaSparkContext;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
-public class CountExample {
+public class TakeExample {
 
     public static void main(String[] args) throws Exception {
         Logger.getLogger("org").setLevel(Level.OFF);
-        SparkConf conf = new SparkConf().setAppName("count").setMaster("local[*]");
+        SparkConf conf = new SparkConf().setAppName("take").setMaster("local[*]");
         JavaSparkContext sc = new JavaSparkContext(conf);
 
         List<String> inputWords = Arrays.asList("spark", "hadoop", "spark", "hive", "pig", "cassandra", "hadoop");
         JavaRDD<String> wordRdd = sc.parallelize(inputWords);
 
-        System.out.println("Count: " + wordRdd.count());
+        List<String> words = wordRdd.take(3);
 
-        Map<String, Long> wordCountByValue = wordRdd.countByValue();
-
-        System.out.println("CountByValue:");
-
-        for (Map.Entry<String, Long> entry : wordCountByValue.entrySet()) {
-            System.out.println(entry.getKey() + " : " + entry.getValue());
+        for (String  word : words) {
+            System.out.println(word);
         }
     }
 }
