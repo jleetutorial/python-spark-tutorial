@@ -16,7 +16,7 @@ public class ReduceExample {
         SparkConf conf = new SparkConf().setAppName("reduce").setMaster("local[*]");
         JavaSparkContext sc = new JavaSparkContext(conf);
 
-        List<Integer> inputIntegers = Arrays.asList(1, 2 , 3, 4, 5);
+        List<Integer> inputIntegers = Arrays.asList(1, 2, 3, 4, 5);
         JavaRDD<Integer> integerRdd = sc.parallelize(inputIntegers);
 
         Integer product = integerRdd.reduce((x, y) -> x * y);
