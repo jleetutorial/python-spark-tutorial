@@ -12,7 +12,7 @@ import java.util.List;
 public class CollectExample {
 
     public static void main(String[] args) throws Exception {
-        Logger.getLogger("org").setLevel(Level.OFF);
+        Logger.getLogger("org").setLevel(Level.ERROR);
         SparkConf conf = new SparkConf().setAppName("collect").setMaster("local[*]");
         JavaSparkContext sc = new JavaSparkContext(conf);
 
