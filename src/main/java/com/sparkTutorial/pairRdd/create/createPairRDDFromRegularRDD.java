@@ -24,7 +24,7 @@ public class createPairRDDFromRegularRDD {
 
         JavaPairRDD<String, Integer> pairRDD = regularRDDs.mapToPair(getNameAndAgePair());
 
-        pairRDD.saveAsTextFile("out/pair_rdd_from_regular_rdd");
+        pairRDD.coalesce(1).saveAsTextFile("out/pair_rdd_from_regular_rdd");
     }
 
     private static PairFunction<String, String, Integer> getNameAndAgePair() {
