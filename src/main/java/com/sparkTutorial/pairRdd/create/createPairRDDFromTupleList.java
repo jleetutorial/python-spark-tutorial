@@ -22,6 +22,7 @@ public class createPairRDDFromTupleList {
                                                             new Tuple2<>("James",8));
 
         JavaPairRDD<String, Integer> pairRDD = sc.parallelizePairs(tuple);
-        pairRDD.saveAsTextFile("out/pair_rdd_from_tuple_list");
+
+        pairRDD.coalesce(1).saveAsTextFile("out/pair_rdd_from_tuple_list");
     }
 }
