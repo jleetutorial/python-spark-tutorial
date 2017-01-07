@@ -1,10 +1,10 @@
-package com.sparkTutorial.rdd.airports;
+package com.sparkTutorial.pairRdd.airports;
 
 public class AirportsProblem {
 
     public static void main(String[] args) throws Exception {
 
-        /* TODO: Create a Spark program to read the airport data from in/airports.text, find all the airports which are located in United States and output the airport's name and the city's name to out/airports_rdd.text.
+        /* TODO: Create a Spark program to read the airport data from in/airports.text, create a pair RDD with airport name being the key and country name being the value. Then remove all the airports which are located in United States and output the pair RDD to out/airports_pair_rdd.text
 
            Each row of the input file contains the following columns:
 
@@ -12,8 +12,8 @@ public class AirportsProblem {
 
            Sample output:
 
-           "Putnam County Airport", "Greencastle"
-           "Dowagiac Municipal Airport", "Dowagiac"
+           ("Kamloops", "Canada")
+           ("Wewak Intl", "Papua New Guinea")
            ...
          */
     }
