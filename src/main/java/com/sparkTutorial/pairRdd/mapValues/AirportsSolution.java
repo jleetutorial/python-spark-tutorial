@@ -21,7 +21,7 @@ public class AirportsSolution {
 
         JavaPairRDD<String, String> upperCase = airportPairRDD.mapValues(countryName -> countryName.toUpperCase());
 
-        upperCase.saveAsTextFile("out/airports_pair_rdd_uppercase.text");
+        upperCase.saveAsTextFile("out/airports_pair_rdd_value_uppercase.text");
     }
 
     private static PairFunction<String, String, String> getAirportNameAndCountryNamePair() {

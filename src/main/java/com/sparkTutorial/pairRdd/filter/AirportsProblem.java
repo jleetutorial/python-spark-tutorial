@@ -1,4 +1,4 @@
-package com.sparkTutorial.pairRdd.airports;
+package com.sparkTutorial.pairRdd.filter;
 
 public class AirportsProblem {
 

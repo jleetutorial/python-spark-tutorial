@@ -1,4 +1,4 @@
-package com.sparkTutorial.pairRdd.airports;
+package com.sparkTutorial.pairRdd.filter;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
