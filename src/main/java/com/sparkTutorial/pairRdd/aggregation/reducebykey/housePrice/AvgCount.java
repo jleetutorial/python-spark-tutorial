@@ -2,11 +2,11 @@ package com.sparkTutorial.pairRdd.aggregation.reducebykey.housePrice;
 
 import java.io.Serializable;
 
-class CountAndTotal implements Serializable {
+public class AvgCount implements Serializable {
     private int count;
     private double total;
 
-    CountAndTotal(int count, double total) {
+    public AvgCount(int count, double total) {
         this.count = count;
         this.total = total;
     }

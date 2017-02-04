@@ -1,12 +1,13 @@
-package com.sparkTutorial.pairRdd.aggregation.reducebykey.housePrice;
+package com.sparkTutorial.pairRdd.aggregation.combinebykey;
 
-
+import com.sparkTutorial.pairRdd.aggregation.reducebykey.housePrice.AvgCount;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.api.java.function.Function;
 import org.apache.spark.api.java.function.Function2;
 import org.apache.spark.api.java.function.PairFunction;
 import scala.Tuple2;
@@ -25,15 +26,12 @@ public class AverageHousePriceSolution {
 
         JavaRDD<String> cleanedLines = lines.filter(line -> !line.contains("Bedrooms"));
 
-        JavaPairRDD<String, AvgCount> housePricePairRdd = cleanedLines.mapToPair(
-                (PairFunction<String, String, AvgCount>) line ->
+        JavaPairRDD<String, Double> housePricePairRdd = cleanedLines.mapToPair(
+                (PairFunction<String, String, Double>) line ->
                 new Tuple2<>(line.split(",")[3],
-                             new AvgCount(1, Double.parseDouble(line.split(",")[2]))));
+                             Double.parseDouble(line.split(",")[2])));
 
-        JavaPairRDD<String, AvgCount> housePriceTotal = housePricePairRdd.reduceByKey(
-                (Function2<AvgCount, AvgCount, AvgCount>) (x, y) ->
-                new AvgCount(x.getCount() + y.getCount(), x.getTotal() + y.getTotal()));
-
+        JavaPairRDD<String, AvgCount> housePriceTotal= housePricePairRdd.combineByKey(createCombiner, mergeValue, mergeCombiners);
 
         JavaPairRDD<String, Double> housePriceAvg = housePriceTotal.mapToPair(
                 (PairFunction<Tuple2<String, AvgCount>, String, Double>) total ->
@@ -44,5 +42,14 @@ public class AverageHousePriceSolution {
 
         }
     }
+
+    static Function<Double, AvgCount> createCombiner = (Function<Double, AvgCount>) x -> new AvgCount(1, x);
+
+    static Function2<AvgCount, Double, AvgCount> mergeValue
+            = (Function2<AvgCount, Double, AvgCount>) (avgCount, x) -> new AvgCount(avgCount.getCount() + 1,
+                                                                                    avgCount.getTotal() + x);
+    static Function2<AvgCount, AvgCount, AvgCount> mergeCombiners
+            = (Function2<AvgCount, AvgCount, AvgCount>) (avgCountA, avgCountB) -> new AvgCount(avgCountA.getCount() + avgCountB.getCount(),
+                                                                                               avgCountA.getTotal() + avgCountB.getTotal());
 
 }
