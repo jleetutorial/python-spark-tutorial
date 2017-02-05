@@ -21,7 +21,7 @@ public class NasaApacheWebLogsSolution {
 
         JavaRDD<String> sample = cleanLogLines.sample(true, 0.1);
 
-        sample.saveAsTextFile("out/sample_nasa_logs.tsv");
+        sample.saveAsTextFile("out/sample_nasa_logs.csv");
     }
 
     private static boolean isNotHeader(String line) {
