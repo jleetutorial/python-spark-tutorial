@@ -19,7 +19,7 @@ public class UkMarketSpaces {
 
         final Broadcast<Map<String, String>> postCodeMap = javaSparkContext.broadcast(loadPostCodeMap());
 
-        JavaRDD<String> marketsRdd = javaSparkContext.textFile("in/uk-makert-spaces-identifiabledata.csv");
+        JavaRDD<String> marketsRdd = javaSparkContext.textFile("in/uk-market-spaces-identifiable-data.csv");
 
         JavaRDD<String> regions = marketsRdd
                 .filter(line -> !line.split(",", -1)[0].equals("Timestamp"))
