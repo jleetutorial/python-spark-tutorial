@@ -1,5 +1,7 @@
 package com.sparkTutorial.advanced.broadcast;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
@@ -13,6 +15,8 @@ public class UkMarketSpaces {
 
     public static void main(String[] args) throws Exception {
 
+        Logger.getLogger("org").setLevel(Level.ERROR);
+
         SparkConf conf = new SparkConf().setAppName("UkMarketSpaces").setMaster("local[1]");
 
         JavaSparkContext javaSparkContext = new JavaSparkContext(conf);
@@ -24,11 +28,9 @@ public class UkMarketSpaces {
         JavaRDD<String> regions = marketsRdd
                 .filter(line -> !line.split(",", -1)[0].equals("Timestamp"))
                 .map(line -> {
-                    List<String> postCodePrefixes = getPostPrefixes(line);
-                    for (String  postCodePrefix: postCodePrefixes) {
-                        if (postCodeMap.value().containsKey(postCodePrefix)) {
-                            return postCodeMap.value().get(postCodePrefix);
-                        }
+                    Optional<String> postPrefix = getPostPrefix(line);
+                    if (postPrefix.isPresent() && postCodeMap.value().containsKey(postPrefix.get())) {
+                        return postCodeMap.value().get(postPrefix.get());
                     }
                     return "Unknown";
                 });
@@ -37,15 +39,13 @@ public class UkMarketSpaces {
         }
     }
 
-    private static List<String> getPostPrefixes(String line) {
+    private static Optional<String> getPostPrefix(String line) {
         String[] splits = line.split(",", -1);
         String postcode = splits[4];
-        String cleanedPostCode = postcode.replaceAll("\\s+", "");
-        ArrayList<String> prefixes = new ArrayList<>();
-        for (int i = 1; i <= cleanedPostCode.length(); i ++) {
-            prefixes.add(cleanedPostCode.substring(0, i));
+        if (postcode.isEmpty()) {
+            return Optional.empty();
         }
-        return prefixes;
+        return Optional.of(postcode.split(" ")[0]);
     }
 
     private static Map<String, String> loadPostCodeMap() throws FileNotFoundException {
@@ -56,7 +56,7 @@ public class UkMarketSpaces {
             String[] splits = line.split(",", -1);
             postCodeMap.put(splits[0], splits[7]);
         }
-        return  postCodeMap;
+        return postCodeMap;
     }
 
 }
