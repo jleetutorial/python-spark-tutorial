@@ -14,6 +14,7 @@ public class StackOverFlowSurvey {
 
     private static final String AGE_MIDPOINT = "age_midpoint";
     private static final String SALARY_MIDPOINT = "salary_midpoint";
+    public static final String SALARY_MIDPOINT_BUCKET = "salary_midpoint_bucket";
 
     public static void main(String[] args) throws Exception {
 
@@ -57,5 +58,8 @@ public class StackOverFlowSurvey {
         System.out.println("=== Group by country and aggregate by average salary middle point and max age middle point ===");
         castedResponse.groupBy("country").agg(avg(SALARY_MIDPOINT), max(AGE_MIDPOINT)).show();
 
+        System.out.println("=== Group by salary bucket ===");
+        Dataset<Row> responseWithSalaryBucket = castedResponse.withColumn(SALARY_MIDPOINT_BUCKET, new Column(SALARY_MIDPOINT).divide(20000).cast("integer").multiply(20000));
+        responseWithSalaryBucket.groupBy(SALARY_MIDPOINT_BUCKET).count().orderBy(new Column(SALARY_MIDPOINT_BUCKET)).show();
     }
 }
