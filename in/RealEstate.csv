@@ -1,4 +1,4 @@
-MLS,Location,Price,Bedrooms,Bathrooms,Size,Price/SQ.Ft,Status
+MLS,Location,Price,Bedrooms,Bathrooms,Size,Price SQ Ft,Status
 132842,Arroyo Grande,795000.00,3,3,2371,335.30,Short Sale
 134364,Paso Robles,399000.00,4,3,2818,141.59,Short Sale
 135141,Paso Robles,545000.00,4,3,3032,179.75,Short Sale
