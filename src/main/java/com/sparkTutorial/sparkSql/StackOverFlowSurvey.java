@@ -14,7 +14,7 @@ public class StackOverFlowSurvey {
 
     private static final String AGE_MIDPOINT = "age_midpoint";
     private static final String SALARY_MIDPOINT = "salary_midpoint";
-    public static final String SALARY_MIDPOINT_BUCKET = "salary_midpoint_bucket";
+    private static final String SALARY_MIDPOINT_BUCKET = "salary_midpoint_bucket";
 
     public static void main(String[] args) throws Exception {
 
