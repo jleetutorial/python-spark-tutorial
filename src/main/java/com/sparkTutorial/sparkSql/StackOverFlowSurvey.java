@@ -2,6 +2,7 @@ package com.sparkTutorial.sparkSql;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.apache.spark.sql.DataFrameReader;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
@@ -21,13 +22,12 @@ public class StackOverFlowSurvey {
         Logger.getLogger("org").setLevel(Level.ERROR);
         SparkSession session = SparkSession.builder().appName("StackOverFlowSurvey").master("local[1]").getOrCreate();
 
-        Dataset<Row> responses = session.read().option("header","true").csv("in/2016-stack-overflow-survey-responses.csv");
+        DataFrameReader dataFrameReader = session.read();
+
+        Dataset<Row> responses = dataFrameReader.option("header","true").csv("in/2016-stack-overflow-survey-responses.csv");
 
         System.out.println("=== Print out schema ===");
         responses.printSchema();
-
-        System.out.println("=== Creates a temporary view called response ===");
-        responses.createOrReplaceTempView("response");
 
         System.out.println("=== Print 20 records of responses table ===");
         responses.show(20);
