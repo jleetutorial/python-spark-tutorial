@@ -61,5 +61,8 @@ public class StackOverFlowSurvey {
         System.out.println("=== Group by salary bucket ===");
         Dataset<Row> responseWithSalaryBucket = castedResponse.withColumn(SALARY_MIDPOINT_BUCKET, col(SALARY_MIDPOINT).divide(20000).cast("integer").multiply(20000));
         responseWithSalaryBucket.groupBy(SALARY_MIDPOINT_BUCKET).count().orderBy(col(SALARY_MIDPOINT_BUCKET)).show();
+
+
+        session.stop();
     }
 }
