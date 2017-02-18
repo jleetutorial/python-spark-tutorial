@@ -2,10 +2,7 @@ package com.sparkTutorial.sparkSql;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.apache.spark.sql.DataFrameReader;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.*;
 
 import static org.apache.spark.sql.functions.avg;
 import static org.apache.spark.sql.functions.col;
@@ -39,8 +36,8 @@ public class StackOverFlowSurvey {
         responses.filter(col("country").equalTo("Afghanistan")).show();
 
         System.out.println("=== Print the count of occupations ===");
-        responses.groupBy(col("occupation")).count().show();
-
+        RelationalGroupedDataset groupedDataset = responses.groupBy(col("occupation"));
+        groupedDataset.count().show();
 
         System.out.println("=== Cast the salary mid point and age mid point to integer ===");
         Dataset<Row> castedResponse = responses.withColumn(SALARY_MIDPOINT, col(SALARY_MIDPOINT).cast("integer"))
