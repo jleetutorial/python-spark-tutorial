@@ -14,10 +14,12 @@ public class UkMarketSpaces {
 
         Logger.getLogger("org").setLevel(Level.ERROR);
 
-        SparkSession session = SparkSession.builder().appName("StackOverFlowSurvey").master("local[1]").getOrCreate();
+        SparkSession session = SparkSession.builder().appName("UkMarketSpaces").master("local[*]").getOrCreate();
 
         Dataset<Row> marketSpace = session.read().option("header", "true").csv("in/uk-market-spaces-identifiable-data.csv");
-        Dataset<Row> postCode = session.read().option("header", "true").csv("in/uk-postcode.csv").withColumn("PostCode", concat_ws("", col("PostCode"), lit(" ")));
+
+        Dataset<Row> postCode = session.read().option("header", "true").csv("in/uk-postcode.csv")
+                .withColumn("PostCode", concat_ws("", col("PostCode"), lit(" ")));
 
         postCode.show();
         marketSpace.show();
