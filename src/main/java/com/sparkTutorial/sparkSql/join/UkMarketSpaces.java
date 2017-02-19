@@ -21,13 +21,16 @@ public class UkMarketSpaces {
         Dataset<Row> postCode = session.read().option("header", "true").csv("in/uk-postcode.csv")
                 .withColumn("PostCode", concat_ws("", col("PostCode"), lit(" ")));
 
-        postCode.show();
+        System.out.println("=== Print 20 records of market space table ===");
         marketSpace.show();
 
-        Dataset<Row> joined = marketSpace.join(postCode, marketSpace.col("Postcode").startsWith(postCode.col("Postcode")));
+        System.out.println("=== Print 20 records of postcode table ===");
+        postCode.show();
 
-        joined.show();
+        Dataset<Row> joined = marketSpace.join(postCode,
+                marketSpace.col("Postcode").startsWith(postCode.col("Postcode")), "left_outer");
 
+        System.out.println("=== Group by Region ===");
         joined.groupBy("Region").count().show(200);
     }
 }
