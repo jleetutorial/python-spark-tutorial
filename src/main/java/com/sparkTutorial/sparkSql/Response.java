@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 public class Response implements Serializable {
     private String country;
-    private float ageMidPoint;
+    private Integer ageMidPoint;
     private String occupation;
-    private float salaryMidPoint;
+    private Integer salaryMidPoint;
 
-    public Response(String country, float ageMidPoint, String occupation, float salaryMidPoint) {
+    public Response(String country, Integer ageMidPoint, String occupation, Integer salaryMidPoint) {
         this.country = country;
         this.ageMidPoint = ageMidPoint;
         this.occupation = occupation;
@@ -26,11 +26,11 @@ public class Response implements Serializable {
         this.country = country;
     }
 
-    public float getAgeMidPoint() {
+    public Integer getAgeMidPoint() {
         return ageMidPoint;
     }
 
-    public void setAgeMidPoint(float ageMidPoint) {
+    public void setAgeMidPoint(Integer ageMidPoint) {
         this.ageMidPoint = ageMidPoint;
     }
 
@@ -42,11 +42,22 @@ public class Response implements Serializable {
         this.occupation = occupation;
     }
 
-    public float getSalaryMidPoint() {
+    public Integer getSalaryMidPoint() {
         return salaryMidPoint;
     }
 
-    public void setSalaryMidPoint(float salaryMidPoint) {
+    public void setSalaryMidPoint(Integer salaryMidPoint) {
         this.salaryMidPoint = salaryMidPoint;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Response{" +
+                "country='" + country + '\'' +
+                ", ageMidPoint=" + ageMidPoint +
+                ", occupation='" + occupation + '\'' +
+                ", salaryMidPoint=" + salaryMidPoint +
+                '}';
     }
 }
