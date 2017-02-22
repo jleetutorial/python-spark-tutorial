@@ -17,13 +17,17 @@ public class TypedDataset {
     public static void main(String[] args) throws Exception {
 
         Logger.getLogger("org").setLevel(Level.ERROR);
-        SparkSession session = SparkSession.builder().appName("StackOverFlowSurvey").master("local[1]").getOrCreate();
+        SparkSession session = SparkSession.builder().appName("StackOverFlowSurvey").master("local[*]").getOrCreate();
 
         DataFrameReader dataFrameReader = session.read();
 
         Dataset<Row> responses = dataFrameReader.option("header","true").csv("in/2016-stack-overflow-survey-responses.csv");
 
-        Dataset<Row> responseWithSelectedColumns = responses.select(col("country"), col("age_midpoint").as("ageMidPoint").cast("integer"), col("occupation"), col("salary_midpoint").as("salaryMidPoint").cast("integer"));
+        Dataset<Row> responseWithSelectedColumns = responses.select(
+                col("country"),
+                col("age_midpoint").as("ageMidPoint").cast("integer"),
+                col("occupation"),
+                col("salary_midpoint").as("salaryMidPoint").cast("integer"));
 
         Dataset<Response> typedDataset = responseWithSelectedColumns.as(Encoders.bean(Response.class));
 
@@ -33,13 +37,13 @@ public class TypedDataset {
         System.out.println("=== Print 20 records of responses table ===");
         typedDataset.show(20);
 
-        System.out.println("=== Print records where the response is from Afghanistan ===");
+        System.out.println("=== Print the responses from Afghanistan ===");
         typedDataset.filter(response -> response.getCountry().equals("Afghanistan")).show();
 
         System.out.println("=== Print the count of occupations ===");
         typedDataset.groupBy(typedDataset.col("occupation")).count().show();
 
-        System.out.println("=== Print records with average mid age less than 20 ===");
+        System.out.println("=== Print responses with average mid age less than 20 ===");
         typedDataset.filter(response -> response.getAgeMidPoint() !=null && response.getAgeMidPoint() < 20).show();
 
         System.out.println("=== Print the result with salary middle point in descending order ===");
