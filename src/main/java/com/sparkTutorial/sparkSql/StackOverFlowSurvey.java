@@ -49,7 +49,7 @@ public class StackOverFlowSurvey {
         System.out.println("=== Print records with average mid age less than 20 ===");
         castedResponse.filter(col(AGE_MIDPOINT).$less(20)).show();
 
-        System.out.println("=== Print the result with salary middle point in descending order ===");
+        System.out.println("=== Print the result by salary middle point in descending order ===");
         castedResponse.orderBy(col(SALARY_MIDPOINT ).desc()).show();
 
         System.out.println("=== Group by country and aggregate by average salary middle point and max age middle point ===");
@@ -57,7 +57,8 @@ public class StackOverFlowSurvey {
         datasetGroupByCountry.agg(avg(SALARY_MIDPOINT), max(AGE_MIDPOINT)).show();
 
 
-        Dataset<Row> responseWithSalaryBucket = castedResponse.withColumn(SALARY_MIDPOINT_BUCKET, col(SALARY_MIDPOINT).divide(20000).cast("integer").multiply(20000));
+        Dataset<Row> responseWithSalaryBucket = castedResponse.withColumn(
+                SALARY_MIDPOINT_BUCKET, col(SALARY_MIDPOINT).divide(20000).cast("integer").multiply(20000));
 
         System.out.println("=== With salary bucket column ===");
         responseWithSalaryBucket.select(col(SALARY_MIDPOINT), col(SALARY_MIDPOINT_BUCKET)).show();
