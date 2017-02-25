@@ -28,7 +28,7 @@ public class RddDatasetConversion {
                 .filter(line -> !line.split(COMMA_DELIMITER, -1)[2].equals("country"))
                 .map(line -> {
                     String[] splits = line.split(COMMA_DELIMITER, -1);
-                    return new Response(splits[2], convertStringToFloat(splits[6]), splits[9], convertStringToFloat(splits[14]));
+                    return new Response(splits[2], toInt(splits[6]), splits[9], toInt(splits[14]));
                 });
         Dataset<Response> responseDataset = session.createDataset(responseRDD.rdd(), Encoders.bean(Response.class));
 
@@ -46,7 +46,7 @@ public class RddDatasetConversion {
 
     }
 
-    private static Integer convertStringToFloat(String split) {
+    private static Integer toInt(String split) {
         return split.isEmpty() ? null : Math.round(Float.valueOf(split));
     }
 
