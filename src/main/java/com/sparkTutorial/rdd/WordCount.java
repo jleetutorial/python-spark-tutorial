@@ -10,7 +10,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import java.util.Arrays;
 import java.util.Map;
 
-public class WorldCount {
+public class WordCount {
 
     public static void main(String[] args) throws Exception {
 
