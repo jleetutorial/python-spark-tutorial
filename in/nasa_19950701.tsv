@@ -1,4 +1,4 @@
-host	logname	time	method	url	response	bytes	referer	useragent
+host	logname	time	method	url	response	bytes
 199.72.81.55	-	804571201	GET	/history/apollo/	200	6245		
 unicomp6.unicomp.net	-	804571206	GET	/shuttle/countdown/	200	3985		
 199.120.110.21	-	804571209	GET	/shuttle/missions/sts-73/mission-sts-73.html	200	4085		

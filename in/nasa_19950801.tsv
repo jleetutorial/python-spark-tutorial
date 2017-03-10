@@ -1,4 +1,4 @@
-host	logname	time	method	url	response	bytes	referer	useragent
+host	logname	time	method	url	response	bytes
 in24.inetnebr.com	-	807249601	GET	/shuttle/missions/sts-68/news/sts-68-mcc-05.txt	200	1839		
 uplherc.upl.com	-	807249607	GET	/	304	0		
 uplherc.upl.com	-	807249608	GET	/images/ksclogo-medium.gif	304	0		
