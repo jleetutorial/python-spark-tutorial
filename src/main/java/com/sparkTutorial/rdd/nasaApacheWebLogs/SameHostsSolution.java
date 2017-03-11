@@ -21,6 +21,8 @@ public class SameHostsSolution {
 
         JavaRDD<String> intersection = julyFirstHosts.intersection(augustFirstHosts);
 
-        intersection.saveAsTextFile("out/nasa_logs_same_hosts.csv");
+        JavaRDD<String> cleanedHostIntersection = intersection.filter(host -> !host.equals("host"));
+
+        cleanedHostIntersection.saveAsTextFile("out/nasa_logs_same_hosts.csv");
     }
 }
