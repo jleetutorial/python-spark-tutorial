@@ -34,11 +34,17 @@ public class AverageHousePriceSolution {
                 (Function2<AvgCount, AvgCount, AvgCount>) (x, y) ->
                 new AvgCount(x.getCount() + y.getCount(), x.getTotal() + y.getTotal()));
 
+        System.out.println("housePriceTotal: ");
+        for (Map.Entry<String, AvgCount> housePriceTotalPair : housePriceTotal.collectAsMap().entrySet()) {
+            System.out.println(housePriceTotalPair.getKey() + " : " + housePriceTotalPair.getValue());
+
+        }
 
         JavaPairRDD<String, Double> housePriceAvg = housePriceTotal.mapToPair(
                 (PairFunction<Tuple2<String, AvgCount>, String, Double>) total ->
                  new Tuple2<>(total._1(), total._2().getTotal()/total._2().getCount()));
 
+        System.out.println("housePriceAvg: ");
         for (Map.Entry<String, Double> housePriceAvgPair : housePriceAvg.collectAsMap().entrySet()) {
             System.out.println(housePriceAvgPair.getKey() + " : " + housePriceAvgPair.getValue());
 

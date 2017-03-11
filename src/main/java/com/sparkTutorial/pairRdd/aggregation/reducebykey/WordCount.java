@@ -29,7 +29,9 @@ public class WordCount {
 
         JavaPairRDD<String, Integer> wordCounts = wordPairRdd.reduceByKey((Function2<Integer, Integer, Integer>) (x, y) -> x + y);
 
-        for (Map.Entry<String, Integer> wordCountPair : wordCounts.collectAsMap().entrySet()) {
+        Map<String, Integer> worldCountsMap = wordCounts.collectAsMap();
+
+        for (Map.Entry<String, Integer> wordCountPair : worldCountsMap.entrySet()) {
             System.out.println(wordCountPair.getKey() + " : " + wordCountPair.getValue());
 
         }

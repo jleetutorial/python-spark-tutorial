@@ -18,4 +18,12 @@ public class AvgCount implements Serializable {
     public double getTotal() {
         return total;
     }
+
+    @Override
+    public String toString() {
+        return "AvgCount{" +
+                "count=" + count +
+                ", total=" + total +
+                '}';
+    }
 }
