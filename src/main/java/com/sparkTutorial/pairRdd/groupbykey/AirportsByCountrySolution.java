@@ -1,5 +1,6 @@
 package com.sparkTutorial.pairRdd.groupbykey;
 
+import com.sparkTutorial.rdd.commons.Utils;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
@@ -7,7 +8,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.PairFunction;
 import scala.Tuple2;
 
-public class AirportsSolution {
+public class AirportsByCountrySolution {
 
     public static void main(String[] args) throws Exception {
 
@@ -17,7 +18,10 @@ public class AirportsSolution {
 
         JavaRDD<String> lines = sc.textFile("in/airports.text");
 
-        JavaPairRDD<String, String> CountryAndAirportNameAndPair = lines.mapToPair((PairFunction<String, String, String>) airport -> new Tuple2<>(airport.split(",")[3], airport.split(",")[1]));
+        JavaPairRDD<String, String> CountryAndAirportNameAndPair =
+                lines.mapToPair((PairFunction<String, String, String>) airport ->
+                        new Tuple2<>(airport.split(Utils.COMMA_DELIMITER)[3],
+                                     airport.split(Utils.COMMA_DELIMITER)[1]));
 
         JavaPairRDD<String, Iterable<String>> AirportsByCountry = CountryAndAirportNameAndPair.groupByKey();
 

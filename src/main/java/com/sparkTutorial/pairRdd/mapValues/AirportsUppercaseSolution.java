@@ -1,5 +1,6 @@
 package com.sparkTutorial.pairRdd.mapValues;
 
+import com.sparkTutorial.rdd.commons.Utils;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
@@ -25,7 +26,7 @@ public class AirportsUppercaseSolution {
     }
 
     private static PairFunction<String, String, String> getAirportNameAndCountryNamePair() {
-        return (PairFunction<String, String, String>) line -> new Tuple2<>(line.split(",")[1],
-                                                                           line.split(",")[3]);
+        return (PairFunction<String, String, String>) line -> new Tuple2<>(line.split(Utils.COMMA_DELIMITER)[1],
+                                                                           line.split(Utils.COMMA_DELIMITER)[3]);
     }
 }
