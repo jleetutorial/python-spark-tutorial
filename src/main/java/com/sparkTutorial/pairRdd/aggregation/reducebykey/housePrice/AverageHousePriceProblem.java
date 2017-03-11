@@ -5,11 +5,11 @@ public class AverageHousePriceProblem {
 
     public static void main(String[] args) throws Exception {
 
-        /* TODO: Create a Spark program to read the house data from in/RealEstate.csv, output the average price for houses with different number of bedrooms.
+        /* Create a Spark program to read the house data from in/RealEstate.csv,
+           output the average price for houses with different number of bedrooms.
 
-        The HOUSES dataset contains a collection of recent real estate listings in San Luis Obispo county and
-        around it. The dataset is provided in two formats: as a CSV file and as a Microsoft Excel (1997­2003)
-        spreadsheet.
+        The houses dataset contains a collection of recent real estate listings in San Luis Obispo county and
+        around it. 
 
         The dataset contains the following fields:
         1. MLS: Multiple listing service number for the house (unique ID).
