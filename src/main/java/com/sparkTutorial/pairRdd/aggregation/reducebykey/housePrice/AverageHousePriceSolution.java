@@ -37,7 +37,6 @@ public class AverageHousePriceSolution {
         System.out.println("housePriceAvg: ");
         for (Map.Entry<String, Double> housePriceAvgPair : housePriceAvg.collectAsMap().entrySet()) {
             System.out.println(housePriceAvgPair.getKey() + " : " + housePriceAvgPair.getValue());
-
         }
     }
 }
