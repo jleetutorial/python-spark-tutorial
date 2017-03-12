@@ -3,11 +3,11 @@ package com.sparkTutorial.sparkSql;
 
 public class HousePriceProblem {
 
-        /* TODO: Create a Spark program to read the house data from in/RealEstate.csv, group by location, aggregate the average price per SQ Ft and max price, and sort by average price per SQ Ft.
+        /* Create a Spark program to read the house data from in/RealEstate.csv,
+           group by location, aggregate the average price per SQ Ft and max price, and sort by average price per SQ Ft.
 
-        The HOUSES dataset contains a collection of recent real estate listings in San Luis Obispo county and
-        around it. The dataset is provided in two formats: as a CSV file and as a Microsoft Excel (1997­2003)
-        spreadsheet.
+        The houses dataset contains a collection of recent real estate listings in San Luis Obispo county and
+        around it. 
 
         The dataset contains the following fields:
         1. MLS: Multiple listing service number for the house (unique ID).

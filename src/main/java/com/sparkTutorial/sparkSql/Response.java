@@ -15,8 +15,7 @@ public class Response implements Serializable {
         this.salaryMidPoint = salaryMidPoint;
     }
 
-    public Response() {
-    }
+    public Response() {}
 
     public String getCountry() {
         return country;
@@ -49,7 +48,6 @@ public class Response implements Serializable {
     public void setSalaryMidPoint(Integer salaryMidPoint) {
         this.salaryMidPoint = salaryMidPoint;
     }
-
 
     @Override
     public String toString() {

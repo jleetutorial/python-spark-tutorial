@@ -14,7 +14,6 @@ public class RddDatasetConversion {
     private static final String COMMA_DELIMITER = ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
 
     public static void main(String[] args) throws Exception {
-
         Logger.getLogger("org").setLevel(Level.ERROR);
         SparkConf conf = new SparkConf().setAppName("StackOverFlowSurvey").setMaster("local[1]");
 
@@ -39,15 +38,11 @@ public class RddDatasetConversion {
         responseDataset.show(20);
 
         JavaRDD<Response> responseJavaRDD = responseDataset.toJavaRDD();
-
         for (Response response : responseJavaRDD.collect()) {
             System.out.println(response);
         }
-
     }
-
     private static Integer toInt(String split) {
         return split.isEmpty() ? null : Math.round(Float.valueOf(split));
     }
-
 }
