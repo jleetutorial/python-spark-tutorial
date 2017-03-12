@@ -1,4 +1,4 @@
-package com.sparkTutorial.pairRdd.sort.sortbykey;
+package com.sparkTutorial.pairRdd.sort;
 
 
 public class SortedWorldCountProblem {
