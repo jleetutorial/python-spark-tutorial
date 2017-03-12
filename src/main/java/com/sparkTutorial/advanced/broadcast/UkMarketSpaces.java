@@ -1,5 +1,6 @@
 package com.sparkTutorial.advanced.broadcast;
 
+import com.sparkTutorial.rdd.commons.Utils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
@@ -14,11 +15,8 @@ import java.util.*;
 public class UkMarketSpaces {
 
     public static void main(String[] args) throws Exception {
-
         Logger.getLogger("org").setLevel(Level.ERROR);
-
         SparkConf conf = new SparkConf().setAppName("UkMarketSpaces").setMaster("local[1]");
-
         JavaSparkContext javaSparkContext = new JavaSparkContext(conf);
 
         final Broadcast<Map<String, String>> postCodeMap = javaSparkContext.broadcast(loadPostCodeMap());
@@ -26,7 +24,7 @@ public class UkMarketSpaces {
         JavaRDD<String> marketsRdd = javaSparkContext.textFile("in/uk-market-spaces-identifiable-data.csv");
 
         JavaRDD<String> regions = marketsRdd
-                .filter(line -> !line.split(",", -1)[0].equals("Timestamp"))
+                .filter(line -> !line.split(Utils.COMMA_DELIMITER, -1)[0].equals("Timestamp"))
                 .map(line -> {
                     Optional<String> postPrefix = getPostPrefix(line);
                     if (postPrefix.isPresent() && postCodeMap.value().containsKey(postPrefix.get())) {
@@ -40,7 +38,7 @@ public class UkMarketSpaces {
     }
 
     private static Optional<String> getPostPrefix(String line) {
-        String[] splits = line.split(",", -1);
+        String[] splits = line.split(Utils.COMMA_DELIMITER, -1);
         String postcode = splits[4];
         if (postcode.isEmpty()) {
             return Optional.empty();
@@ -53,7 +51,7 @@ public class UkMarketSpaces {
         Map<String, String> postCodeMap = new HashMap<>();
         while (postCode.hasNextLine()) {
             String line = postCode.nextLine();
-            String[] splits = line.split(",", -1);
+            String[] splits = line.split(Utils.COMMA_DELIMITER, -1);
             postCodeMap.put(splits[0], splits[7]);
         }
         return postCodeMap;

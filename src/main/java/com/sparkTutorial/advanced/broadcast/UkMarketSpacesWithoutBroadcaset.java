@@ -1,5 +1,8 @@
 package com.sparkTutorial.advanced.broadcast;
 
+import com.sparkTutorial.rdd.commons.Utils;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
@@ -11,9 +14,8 @@ import java.util.*;
 public class UkMarketSpacesWithoutBroadcaset {
 
     public static void main(String[] args) throws Exception {
-
+        Logger.getLogger("org").setLevel(Level.ERROR);
         SparkConf conf = new SparkConf().setAppName("UkMarketSpaces").setMaster("local[1]");
-
         JavaSparkContext javaSparkContext = new JavaSparkContext(conf);
 
         final Map<String, String> postCodeMap = loadPostCodeMap();
@@ -21,7 +23,7 @@ public class UkMarketSpacesWithoutBroadcaset {
         JavaRDD<String> marketsRdd = javaSparkContext.textFile("in/uk-market-spaces-identifiable-data.csv");
 
         JavaRDD<String> regions = marketsRdd
-                .filter(line -> !line.split(",", -1)[0].equals("Timestamp"))
+                .filter(line -> !line.split(Utils.COMMA_DELIMITER, -1)[0].equals("Timestamp"))
                 .map(line -> {
                     List<String> postCodePrefixes = getPostPrefixes(line);
                     for (String  postCodePrefix: postCodePrefixes) {
@@ -37,7 +39,7 @@ public class UkMarketSpacesWithoutBroadcaset {
     }
 
     private static List<String> getPostPrefixes(String line) {
-        String[] splits = line.split(",", -1);
+        String[] splits = line.split(Utils.COMMA_DELIMITER, -1);
         String postcode = splits[4];
         String cleanedPostCode = postcode.replaceAll("\\s+", "");
         ArrayList<String> prefixes = new ArrayList<>();
@@ -52,7 +54,7 @@ public class UkMarketSpacesWithoutBroadcaset {
         Map<String, String> postCodeMap = new HashMap<>();
         while (postCode.hasNextLine()) {
             String line = postCode.nextLine();
-            String[] splits = line.split(",", -1);
+            String[] splits = line.split(Utils.COMMA_DELIMITER, -1);
             postCodeMap.put(splits[0], splits[7]);
         }
         return  postCodeMap;
