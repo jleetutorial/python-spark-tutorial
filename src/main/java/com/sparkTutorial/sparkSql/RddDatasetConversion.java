@@ -9,9 +9,9 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.SparkSession;
 
-public class RddDatasetConversion {
+import static com.sparkTutorial.rdd.commons.Utils.COMMA_DELIMITER;
 
-    private static final String COMMA_DELIMITER = ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
+public class RddDatasetConversion {
 
     public static void main(String[] args) throws Exception {
         Logger.getLogger("org").setLevel(Level.ERROR);
