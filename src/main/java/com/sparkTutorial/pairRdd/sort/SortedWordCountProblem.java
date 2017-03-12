@@ -1,7 +1,7 @@
 package com.sparkTutorial.pairRdd.sort;
 
 
-public class SortedWorldCountProblem {
+public class SortedWordCountProblem {
 
     /* Create a Spark program to read the an article from in/word_count.text,
        output the number of occurrence of each word in descending order.

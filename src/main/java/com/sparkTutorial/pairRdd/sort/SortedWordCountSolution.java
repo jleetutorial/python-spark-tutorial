@@ -11,7 +11,7 @@ import scala.Tuple2;
 
 import java.util.Arrays;
 
-public class SortedWorldCountSolution {
+public class SortedWordCountSolution {
 
     public static void main(String[] args) throws Exception {
 
