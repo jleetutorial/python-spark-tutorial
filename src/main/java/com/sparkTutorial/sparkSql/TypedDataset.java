@@ -2,6 +2,7 @@ package com.sparkTutorial.sparkSql;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.apache.spark.api.java.function.FilterFunction;
 import org.apache.spark.sql.*;
 
 import static org.apache.spark.sql.functions.avg;
@@ -38,19 +39,21 @@ public class TypedDataset {
         typedDataset.show(20);
 
         System.out.println("=== Print the responses from Afghanistan ===");
-        typedDataset.filter(response -> response.getCountry().equals("Afghanistan")).show();
+        typedDataset.filter((FilterFunction<Response>) response -> response.getCountry().equals("Afghanistan")).show();
 
         System.out.println("=== Print the count of occupations ===");
         typedDataset.groupBy(typedDataset.col("occupation")).count().show();
 
         System.out.println("=== Print responses with average mid age less than 20 ===");
-        typedDataset.filter(response -> response.getAgeMidPoint() !=null && response.getAgeMidPoint() < 20).show();
+        typedDataset.filter((FilterFunction<Response>)response -> response.getAgeMidPoint() !=null &&
+                                                                  response.getAgeMidPoint() < 20)
+                    .show();
 
         System.out.println("=== Print the result by salary middle point in descending order ===");
         typedDataset.orderBy(typedDataset.col(SALARY_MIDPOINT ).desc()).show();
 
         System.out.println("=== Group by country and aggregate by average salary middle point and max age middle point ===");
-        typedDataset.filter(response -> response.getSalaryMidPoint() != null)
+        typedDataset.filter((FilterFunction<Response>) response -> response.getSalaryMidPoint() != null)
                     .groupBy("country")
                     .agg(avg(SALARY_MIDPOINT), max(AGE_MIDPOINT))
                     .show();
