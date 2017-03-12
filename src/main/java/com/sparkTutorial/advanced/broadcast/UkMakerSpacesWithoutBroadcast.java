@@ -11,18 +11,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-public class UkMarketSpacesWithoutBroadcaset {
+public class UkMakerSpacesWithoutBroadcast {
 
     public static void main(String[] args) throws Exception {
         Logger.getLogger("org").setLevel(Level.ERROR);
-        SparkConf conf = new SparkConf().setAppName("UkMarketSpaces").setMaster("local[1]");
+        SparkConf conf = new SparkConf().setAppName("UkMakerSpaces").setMaster("local[1]");
         JavaSparkContext javaSparkContext = new JavaSparkContext(conf);
 
         final Map<String, String> postCodeMap = loadPostCodeMap();
 
-        JavaRDD<String> marketsRdd = javaSparkContext.textFile("in/uk-market-spaces-identifiable-data.csv");
+        JavaRDD<String> makerSpaceRdd = javaSparkContext.textFile("in/uk-makerspaces-identifiable-data.csv");
 
-        JavaRDD<String> regions = marketsRdd
+        JavaRDD<String> regions = makerSpaceRdd
                 .filter(line -> !line.split(Utils.COMMA_DELIMITER, -1)[0].equals("Timestamp"))
                 .map(line -> {
                     List<String> postCodePrefixes = getPostPrefixes(line);
