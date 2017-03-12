@@ -3,6 +3,7 @@ package com.sparkTutorial.sparkSql;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.api.java.function.FilterFunction;
+import org.apache.spark.api.java.function.MapFunction;
 import org.apache.spark.sql.*;
 
 import static org.apache.spark.sql.functions.avg;
@@ -59,8 +60,9 @@ public class TypedDataset {
                     .show();
 
         System.out.println("=== Group by salary bucket ===");
-        typedDataset.map(response -> response.getSalaryMidPoint() == null ?
-                                     null : Math.round(response.getSalaryMidPoint()/20000) * 20000, Encoders.INT())
+        typedDataset.map((MapFunction<Response, Integer>) response -> response.getSalaryMidPoint() == null ?
+                                                                      null :
+                                                                      Math.round(response.getSalaryMidPoint()/20000) * 20000, Encoders.INT())
                     .withColumnRenamed("value", SALARY_MIDPOINT_BUCKET)
                     .groupBy(SALARY_MIDPOINT_BUCKET)
                     .count()
