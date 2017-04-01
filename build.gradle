@@ -2,6 +2,7 @@ group 'jameslee'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'scala'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
 
