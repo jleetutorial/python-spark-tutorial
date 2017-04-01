@@ -1,6 +1,5 @@
 package com.sparkTutorial.advanced.accumulator;
 
-import com.sparkTutorial.rdd.commons.Utils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
