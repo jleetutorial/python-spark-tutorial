@@ -1,6 +1,6 @@
 package com.sparkTutorial.rdd.airports
 
-import com.sparkTutorial.rdd.commons.Utils
+import com.sparkTutorial.commons.Utils
 import org.apache.spark.SparkConf
 import org.apache.spark.api.java.JavaSparkContext
 

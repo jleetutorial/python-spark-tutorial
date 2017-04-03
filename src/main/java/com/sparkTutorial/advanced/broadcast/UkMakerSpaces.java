@@ -1,5 +1,6 @@
 package com.sparkTutorial.advanced.broadcast;
 
+import com.sparkTutorial.rdd.commons.Utils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
@@ -10,6 +11,8 @@ import org.apache.spark.broadcast.Broadcast;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
+
+import static com.sparkTutorial.rdd.commons.Utils.COMMA_DELIMITER;
 
 public class UkMakerSpaces {
 
@@ -50,7 +53,7 @@ public class UkMakerSpaces {
         Map<String, String> postCodeMap = new HashMap<>();
         while (postCode.hasNextLine()) {
             String line = postCode.nextLine();
-            String[] splits = line.split(Utils.COMMA_DELIMITER, -1);
+            String[] splits = line.split(COMMA_DELIMITER, -1);
             postCodeMap.put(splits[0], splits[7]);
         }
         return postCodeMap;

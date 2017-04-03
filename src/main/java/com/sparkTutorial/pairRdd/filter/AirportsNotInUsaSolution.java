@@ -1,11 +1,14 @@
 package com.sparkTutorial.pairRdd.filter;
 
+import com.sparkTutorial.commons.Utils;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.PairFunction;
 import scala.Tuple2;
+
+import static com.sparkTutorial.rdd.commons.Utils.COMMA_DELIMITER;
 
 public class AirportsNotInUsaSolution {
 
@@ -25,7 +28,7 @@ public class AirportsNotInUsaSolution {
     }
 
     private static PairFunction<String, String, String> getAirportNameAndCountryNamePair() {
-        return (PairFunction<String, String, String>) line -> new Tuple2<>(line.split(Utils.COMMA_DELIMITER)[1],
-                                                                           line.split(Utils.COMMA_DELIMITER)[3]);
+        return (PairFunction<String, String, String>) line -> new Tuple2<>(line.split(COMMA_DELIMITER)[1],
+                                                                           line.split(COMMA_DELIMITER)[3]);
     }
 }

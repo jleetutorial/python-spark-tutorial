@@ -1,5 +1,6 @@
 package com.sparkTutorial.advanced.broadcast;
 
+import com.sparkTutorial.commons.Utils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
@@ -9,6 +10,8 @@ import org.apache.spark.api.java.JavaSparkContext;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
+
+import static com.sparkTutorial.rdd.commons.Utils.COMMA_DELIMITER;
 
 public class UkMakerSpacesWithoutBroadcast {
 
@@ -22,7 +25,7 @@ public class UkMakerSpacesWithoutBroadcast {
         JavaRDD<String> makerSpaceRdd = javaSparkContext.textFile("in/uk-makerspaces-identifiable-data.csv");
 
         JavaRDD<String> regions = makerSpaceRdd
-                .filter(line -> !line.split(Utils.COMMA_DELIMITER, -1)[0].equals("Timestamp"))
+                .filter(line -> !line.split(COMMA_DELIMITER, -1)[0].equals("Timestamp"))
                 .map(line -> {
                     List<String> postCodePrefixes = getPostPrefixes(line);
                     for (String  postCodePrefix: postCodePrefixes) {
@@ -38,7 +41,7 @@ public class UkMakerSpacesWithoutBroadcast {
     }
 
     private static List<String> getPostPrefixes(String line) {
-        String[] splits = line.split(Utils.COMMA_DELIMITER, -1);
+        String[] splits = line.split(COMMA_DELIMITER, -1);
         String postcode = splits[4];
         String cleanedPostCode = postcode.replaceAll("\\s+", "");
         ArrayList<String> prefixes = new ArrayList<>();
@@ -53,7 +56,7 @@ public class UkMakerSpacesWithoutBroadcast {
         Map<String, String> postCodeMap = new HashMap<>();
         while (postCode.hasNextLine()) {
             String line = postCode.nextLine();
-            String[] splits = line.split(Utils.COMMA_DELIMITER, -1);
+            String[] splits = line.split(COMMA_DELIMITER, -1);
             postCodeMap.put(splits[0], splits[7]);
         }
         return  postCodeMap;
