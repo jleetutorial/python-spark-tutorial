@@ -1,0 +1,27 @@
+package com.sparkTutorial.rdd.nasaApacheWebLogs
+
+import org.apache.spark.SparkConf
+import org.apache.spark.api.java.JavaSparkContext
+
+object UnionLogsSolution extends Serializable {
+
+    def main(args: Array[String]) {
+
+        val conf = new SparkConf().setAppName("unionLogs").setMaster("local[*]")
+
+        val sc = new JavaSparkContext(conf)
+
+        val julyFirstLogs = sc.textFile("in/nasa_19950701.tsv")
+        val augustFirstLogs = sc.textFile("in/nasa_19950801.tsv")
+
+        val aggregatedLogLines = julyFirstLogs.union(augustFirstLogs)
+
+        val cleanLogLines = aggregatedLogLines.filter(line => isNotHeader(line))
+
+        val sample = cleanLogLines.sample(true, 0.1)
+
+        sample.saveAsTextFile("out/sample_nasa_logs.csv")
+    }
+
+    def isNotHeader(line: String): Boolean = !(line.startsWith("host") && line.contains("bytes"))
+}
