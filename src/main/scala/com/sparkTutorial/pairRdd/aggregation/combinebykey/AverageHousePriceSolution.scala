@@ -16,6 +16,11 @@ object AverageHousePriceSolution {
 
 
     val housePricePairRdd = cleanedLines.map(line => (line.split(",")(3), line.split(",")(2).toDouble))
+
+    val createCombiner = (x: Double) => (1, x)
+    val mergeValue = (avgCount: AvgCount, x: Double) => (avgCount._1 + 1, avgCount._2 + x)
+    val mergeCombiners = (avgCountA: AvgCount, avgCountB: AvgCount) => (avgCountA._1 + avgCountB._1, avgCountA._2 + avgCountB._2)
+
     val housePriceTotal = housePricePairRdd.combineByKey(createCombiner, mergeValue, mergeCombiners)
 
     val housePriceAvg = housePriceTotal.mapValues(avgCount => avgCount._2 / avgCount._1)
@@ -23,7 +28,4 @@ object AverageHousePriceSolution {
   }
 
   type AvgCount = (Int, Double)
-  val createCombiner = (x: Double) => (1, x)
-  val mergeValue = (avgCount: AvgCount, x: Double) => (avgCount._1 + 1, avgCount._2 + x)
-  val mergeCombiners = (avgCountA: AvgCount, avgCountB: AvgCount) => (avgCountA._1 + avgCountB._1, avgCountA._2 + avgCountB._2)
 }
