@@ -1,7 +1,7 @@
 package com.sparkTutorial.rdd.airports
 
 object AirportsInUsaProblem {
-    def main(args: Array[String])  {
+  def main(args: Array[String]) {
 
     /* Create a Spark program to read the airport data from in/airports.text, find all the airports which are located in United States
        and output the airport's name and the city's name to out/airports_in_usa.text.
@@ -15,5 +15,5 @@ object AirportsInUsaProblem {
        "Dowagiac Municipal Airport", "Dowagiac"
        ...
      */
-    }
+  }
 }

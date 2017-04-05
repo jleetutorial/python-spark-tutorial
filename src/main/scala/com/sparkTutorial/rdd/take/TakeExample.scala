@@ -6,15 +6,15 @@ import org.apache.spark.api.java.JavaSparkContext
 
 object TakeExample {
 
-    def main(args: Array[String])  {
-        Logger.getLogger("org").setLevel(Level.OFF)
-        val conf = new SparkConf().setAppName("take").setMaster("local[*]")
-        val sc = new JavaSparkContext(conf)
+  def main(args: Array[String]) {
+    Logger.getLogger("org").setLevel(Level.OFF)
+    val conf = new SparkConf().setAppName("take").setMaster("local[*]")
+    val sc = new JavaSparkContext(conf)
 
-        val inputWords = List("spark", "hadoop", "spark", "hive", "pig", "cassandra", "hadoop")
-        val wordRdd = sc.parallelize(inputWords)
+    val inputWords = List("spark", "hadoop", "spark", "hive", "pig", "cassandra", "hadoop")
+    val wordRdd = sc.parallelize(inputWords)
 
-        val words = wordRdd.take(3)
-        for (word <- words) println(word)
-    }
+    val words = wordRdd.take(3)
+    for (word <- words) println(word)
+  }
 }

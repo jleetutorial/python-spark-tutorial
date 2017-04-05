@@ -1,15 +1,14 @@
 package com.sparkTutorial.rdd.airports
 
 import com.sparkTutorial.commons.Utils
-import org.apache.spark.SparkConf
-import org.apache.spark.api.java.JavaSparkContext
+import org.apache.spark.{SparkConf, SparkContext}
 
 object AirportsInUsaSolution {
 
   def main(args: Array[String]) {
 
     val conf = new SparkConf().setAppName("airports").setMaster("local[2]")
-    val sc = new JavaSparkContext(conf)
+    val sc = new SparkContext(conf)
 
     val airports = sc.textFile("in/airports.text")
     val airportsInUSA = airports.filter(line => line.split(Utils.COMMA_DELIMITER)(3) == "\"United States\"")
