@@ -14,7 +14,6 @@ object AverageHousePriceSolution {
     val lines = sc.textFile("in/RealEstate.csv")
     val cleanedLines = lines.filter(line => !line.contains("Bedrooms"))
 
-
     val housePricePairRdd = cleanedLines.map(line => (line.split(",")(3), line.split(",")(2).toDouble))
 
     val createCombiner = (x: Double) => (1, x)
