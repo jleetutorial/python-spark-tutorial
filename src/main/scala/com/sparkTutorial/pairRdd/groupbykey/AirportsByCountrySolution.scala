@@ -14,7 +14,7 @@ object AirportsByCountrySolution {
     val lines = sc.textFile("in/airports.text")
 
     val countryAndAirportNameAndPair = lines.map(airport => (airport.split(Utils.COMMA_DELIMITER)(3),
-      airport.split(Utils.COMMA_DELIMITER)(1)))
+                                                             airport.split(Utils.COMMA_DELIMITER)(1)))
 
     val airportsByCountry = countryAndAirportNameAndPair.groupByKey()
 
