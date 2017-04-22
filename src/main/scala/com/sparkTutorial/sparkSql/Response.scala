@@ -1,3 +1,3 @@
 package com.sparkTutorial.sparkSql
 
-case class Response(country: String, ageMidPoint: Int, occupation: String, salaryMidPoint: Int)
+case class Response(country: String, ageMidPoint: Option[Int], occupation: String, salaryMidPoint: Option[Int])

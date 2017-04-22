@@ -38,7 +38,7 @@ object RddDatasetConversion extends Serializable{
     for (response <- responseDataset.rdd.collect()) println(response)
   }
 
-  def toInt(split: String): Int = {
-    if (split.isEmpty) null.asInstanceOf[Int] else Math.round(split.toFloat)
+  def toInt(split: String): Option[Int] = {
+    if (split.isEmpty) None else Some(Math.round(split.toFloat))
   }
 }
