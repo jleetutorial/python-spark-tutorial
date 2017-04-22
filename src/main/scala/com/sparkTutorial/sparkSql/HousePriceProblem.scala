@@ -1,7 +1,7 @@
-package com.sparkTutorial.sparkSql;
+package com.sparkTutorial.sparkSql
 
 
-public class HousePriceProblem {
+object HousePriceProblem {
 
         /* Create a Spark program to read the house data from in/RealEstate.csv,
            group by location, aggregate the average price per SQ Ft and max price, and sort by average price per SQ Ft.
