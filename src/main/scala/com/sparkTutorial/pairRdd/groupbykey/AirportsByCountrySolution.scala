@@ -1,6 +1,6 @@
 package com.sparkTutorial.pairRdd.groupbykey
 
-import com.sparkTutorial.rdd.commons.Utils
+import com.sparkTutorial.commons.Utils
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.{SparkConf, SparkContext}
 

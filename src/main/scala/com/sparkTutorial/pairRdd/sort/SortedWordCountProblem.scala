@@ -1,4 +1,4 @@
-package com.sparkTutorial.pairRdd.sort;
+package com.sparkTutorial.pairRdd.sort
 
 
 object SortedWordCountProblem {
