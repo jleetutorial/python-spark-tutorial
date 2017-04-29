@@ -1,19 +1,9 @@
 group 'jameslee'
 version '1.0-SNAPSHOT'
 
-apply plugin: 'java'
 apply plugin: 'scala'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
-
-sourceCompatibility = 1.8
-
-idea {
-    project {
-        jdkName = '1.8'
-        languageLevel = '1.8'
-    }
-}
 
 repositories {
     mavenCentral()

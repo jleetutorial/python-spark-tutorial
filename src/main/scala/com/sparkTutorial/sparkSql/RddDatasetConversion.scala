@@ -2,7 +2,7 @@ package com.sparkTutorial.sparkSql
 
 import com.sparkTutorial.commons.Utils
 import org.apache.log4j.{Level, Logger}
-import org.apache.spark.sql.{SQLContext, SparkSession}
+import org.apache.spark.sql.SparkSession
 import org.apache.spark.{SparkConf, SparkContext}
 
 
@@ -13,7 +13,6 @@ object RddDatasetConversion extends Serializable{
     val conf = new SparkConf().setAppName("StackOverFlowSurvey").setMaster("local[1]")
 
     val sc = new SparkContext(conf)
-    val sqlContext = new SQLContext(sc)
 
     val session = SparkSession.builder().appName("StackOverFlowSurvey").master("local[1]").getOrCreate()
 
