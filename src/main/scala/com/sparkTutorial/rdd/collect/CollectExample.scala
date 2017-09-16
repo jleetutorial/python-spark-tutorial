@@ -10,7 +10,7 @@ object CollectExample {
     val conf = new SparkConf().setAppName("collect").setMaster("local[*]")
     val sc = new SparkContext(conf)
 
-    var inputWords = List("spark", "hadoop", "spark", "hive", "pig", "cassandra", "hadoop")
+    val inputWords = List("spark", "hadoop", "spark", "hive", "pig", "cassandra", "hadoop")
     val wordRdd = sc.parallelize(inputWords)
 
     val words = wordRdd.collect()
