@@ -17,6 +17,6 @@ object AirportsInUsaSolution {
       val splits = line.split(Utils.COMMA_DELIMITER)
       splits(1) + ", " + splits(2)
     })
-    airportsNameAndCityNames.saveAsTextFile("out/airports_in_usa.text");
+    airportsNameAndCityNames.saveAsTextFile("out/airports_in_usa.text")
   }
 }
