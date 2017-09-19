@@ -17,7 +17,7 @@ object UnionLogsSolution extends Serializable {
 
     val cleanLogLines = aggregatedLogLines.filter(line => isNotHeader(line))
 
-    val sample = cleanLogLines.sample(true, 0.1)
+    val sample = cleanLogLines.sample(withReplacement = true, fraction = 0.1)
 
     sample.saveAsTextFile("out/sample_nasa_logs.csv")
   }
