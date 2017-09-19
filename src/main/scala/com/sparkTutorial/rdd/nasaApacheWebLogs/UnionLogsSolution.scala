@@ -2,7 +2,7 @@ package com.sparkTutorial.rdd.nasaApacheWebLogs
 
 import org.apache.spark.{SparkConf, SparkContext}
 
-object UnionLogsSolution extends Serializable {
+object UnionLogsSolution {
 
   def main(args: Array[String]) {
 
