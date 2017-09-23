@@ -6,7 +6,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 
 import scala.io.Source
 
-object UkMakerSpacesWithoutBroadcast extends Serializable {
+object UkMakerSpacesWithoutBroadcast {
 
   def main(args: Array[String]) {
     Logger.getLogger("org").setLevel(Level.ERROR)
