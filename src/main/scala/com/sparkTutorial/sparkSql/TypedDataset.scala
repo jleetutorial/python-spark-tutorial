@@ -5,8 +5,8 @@ import org.apache.spark.sql.SparkSession
 
 object TypedDataset {
 
-  val AGE_MIDPOINT = "ageMidpoint"
-  val SALARY_MIDPOINT = "salaryMidPoint"
+  val AGE_MIDPOINT = "age_midpoint"
+  val SALARY_MIDPOINT = "salary_midpoint"
   val SALARY_MIDPOINT_BUCKET = "salaryMidpointBucket"
 
   def main(args: Array[String]) {
@@ -24,9 +24,9 @@ object TypedDataset {
 
     val responseWithRenamedColumns = responseWithSelectedColumns
       .withColumn("country", responses.col("country"))
-      .withColumn(AGE_MIDPOINT, responses.col("age_midpoint").cast("integer"))
+      .withColumn(AGE_MIDPOINT, responses.col(AGE_MIDPOINT).cast("integer"))
       .withColumn("occupation", responses.col("occupation"))
-      .withColumn(SALARY_MIDPOINT, responses.col("salary_midpoint").cast("integer"))
+      .withColumn(SALARY_MIDPOINT, responses.col(SALARY_MIDPOINT).cast("integer"))
 
     import session.implicits._
     val typedDataset = responseWithRenamedColumns.as[Response]
@@ -44,16 +44,16 @@ object TypedDataset {
     typedDataset.groupBy(typedDataset.col("occupation")).count().show()
 
     System.out.println("=== Print responses with average mid age less than 20 ===")
-    typedDataset.filter(response => response.ageMidPoint.isDefined && response.ageMidPoint.get < 20).show()
+    typedDataset.filter(response => response.age_midpoint.isDefined && response.age_midpoint.get < 20).show()
 
     System.out.println("=== Print the result by salary middle point in descending order ===")
     typedDataset.orderBy(typedDataset.col(SALARY_MIDPOINT).desc).show()
 
     System.out.println("=== Group by country and aggregate by average salary middle point ===")
-    typedDataset.filter(response => response.salaryMidPoint.isDefined).groupBy("country").avg(SALARY_MIDPOINT).show()
+    typedDataset.filter(response => response.salary_midpoint.isDefined).groupBy("country").avg(SALARY_MIDPOINT).show()
 
     System.out.println("=== Group by salary bucket ===")
-    typedDataset.map(response => response.salaryMidPoint.map(point => Math.round(point / 20000) * 20000).orElse(None))
+    typedDataset.map(response => response.salary_midpoint.map(point => Math.round(point / 20000) * 20000).orElse(None))
       .withColumnRenamed("value", SALARY_MIDPOINT_BUCKET)
       .groupBy(SALARY_MIDPOINT_BUCKET)
       .count()
