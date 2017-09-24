@@ -42,7 +42,7 @@ object StackOverFlowSurvey {
     System.out.println("=== Print the result by salary middle point in descending order ===")
     responseWithSelectedColumns.orderBy(responseWithSelectedColumns.col(SALARY_MIDPOINT).desc).show()
 
-    System.out.println("=== Group by country and aggregate by average salary middle point and max age middle point ===")
+    System.out.println("=== Group by country and aggregate by average salary middle point ===")
     val datasetGroupByCountry = responseWithSelectedColumns.groupBy("country")
     datasetGroupByCountry.avg(SALARY_MIDPOINT).show()
 
