@@ -4,7 +4,7 @@ package com.sparkTutorial.sparkSql
 object HousePriceProblem {
 
         /* Create a Spark program to read the house data from in/RealEstate.csv,
-           group by location, aggregate the average price per SQ Ft and max price, and sort by average price per SQ Ft.
+           group by location, aggregate the average price per SQ Ft and sort by average price per SQ Ft.
 
         The houses dataset contains a collection of recent real estate listings in San Luis Obispo county and
         around it. 
@@ -25,17 +25,16 @@ object HousePriceProblem {
 
         Sample output:
 
-        +----------------+-----------------+----------+
-        |        Location| avg(Price SQ Ft)|max(Price)|
-        +----------------+-----------------+----------+
-        |          Oceano|           1145.0|   1195000|
-        |         Bradley|            606.0|   1600000|
-        | San Luis Obispo|            459.0|   2369000|
-        |      Santa Ynez|            391.4|   1395000|
-        |         Cayucos|            387.0|   1500000|
-        |.............................................|
-        |.............................................|
-        |.............................................|
-
+        +----------------+-----------------+
+        |        Location| avg(Price SQ Ft)|
+        +----------------+-----------------+
+        |          Oceano|             95.0|
+        |         Bradley|            206.0|
+        | San Luis Obispo|            359.0|
+        |      Santa Ynez|            491.4|
+        |         Cayucos|            887.0|
+        |................|.................|
+        |................|.................|
+        |................|.................|
          */
 }
