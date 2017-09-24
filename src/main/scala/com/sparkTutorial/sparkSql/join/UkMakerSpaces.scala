@@ -17,7 +17,7 @@ object UkMakerSpaces {
        .withColumn("PostCode", functions.concat_ws("", functions.col("PostCode"), functions.lit(" ")))
 
     System.out.println("=== Print 20 records of makerspace table ===")
-    makerSpace.show()
+    makerSpace.select("Name of makerspace", "Postcode").show()
 
     System.out.println("=== Print 20 records of postcode table ===")
     postCode.show()
