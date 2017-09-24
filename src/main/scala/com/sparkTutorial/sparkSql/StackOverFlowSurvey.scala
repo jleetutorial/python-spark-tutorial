@@ -16,45 +16,38 @@ object StackOverFlowSurvey {
 
     val dataFrameReader = session.read
 
-    val responses = dataFrameReader.option("header", "true").csv("in/2016-stack-overflow-survey-responses.csv")
+    val responses = dataFrameReader
+      .option("header", "true")
+      .option("inferSchema", value = true)
+      .csv("in/2016-stack-overflow-survey-responses.csv")
 
     System.out.println("=== Print out schema ===")
     responses.printSchema()
 
-    System.out.println("=== Print 20 records of responses table ===")
-    responses.show(20)
+    val responseWithSelectedColumns = responses.select("country", "occupation", AGE_MIDPOINT, SALARY_MIDPOINT)
 
-    System.out.println("=== Print the so_region and self_identification columns of gender table ===")
-    responses.select("so_region", "self_identification").show()
+    System.out.println("=== Print the selected columns of the table ===")
+    responseWithSelectedColumns.show()
 
     System.out.println("=== Print records where the response is from Afghanistan ===")
-    responses.filter(responses.col("country").===("Afghanistan")).show()
+    responseWithSelectedColumns.filter(responseWithSelectedColumns.col("country").===("Afghanistan")).show()
 
     System.out.println("=== Print the count of occupations ===")
-    val groupedDataset = responses.groupBy("occupation")
+    val groupedDataset = responseWithSelectedColumns.groupBy("occupation")
     groupedDataset.count().show()
 
-    System.out.println("=== Cast the salary mid point and age mid point to integer ===")
-    val castedResponse = responses.withColumn(SALARY_MIDPOINT, responses.col(SALARY_MIDPOINT).cast("integer"))
-      .withColumn(AGE_MIDPOINT, responses.col(AGE_MIDPOINT).cast("integer"))
-
-    System.out.println("=== Print out casted schema ===")
-    castedResponse.printSchema()
-
-    import session.implicits._
     System.out.println("=== Print records with average mid age less than 20 ===")
-    castedResponse.filter($"age_midpoint" < 20).show()
+    responseWithSelectedColumns.filter(responseWithSelectedColumns.col(AGE_MIDPOINT) < 20).show()
 
     System.out.println("=== Print the result by salary middle point in descending order ===")
-    castedResponse.orderBy(castedResponse.col(SALARY_MIDPOINT).desc).show()
+    responseWithSelectedColumns.orderBy(responseWithSelectedColumns.col(SALARY_MIDPOINT).desc).show()
 
     System.out.println("=== Group by country and aggregate by average salary middle point and max age middle point ===")
-    val datasetGroupByCountry = castedResponse.groupBy("country")
+    val datasetGroupByCountry = responseWithSelectedColumns.groupBy("country")
     datasetGroupByCountry.avg(SALARY_MIDPOINT).show()
 
-
-    val responseWithSalaryBucket = castedResponse.withColumn(
-      SALARY_MIDPOINT_BUCKET, castedResponse.col(SALARY_MIDPOINT).divide(20000).cast("integer").multiply(20000))
+    val responseWithSalaryBucket = responses.withColumn(SALARY_MIDPOINT_BUCKET,
+      responses.col(SALARY_MIDPOINT).divide(20000).cast("integer").multiply(20000))
 
     System.out.println("=== With salary bucket column ===")
     responseWithSalaryBucket.select(SALARY_MIDPOINT, SALARY_MIDPOINT_BUCKET).show()
