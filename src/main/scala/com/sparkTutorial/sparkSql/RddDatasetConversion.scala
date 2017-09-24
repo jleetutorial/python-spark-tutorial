@@ -5,7 +5,7 @@ import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.{SparkConf, SparkContext}
 
-object RddDatasetConversion extends Serializable{
+object RddDatasetConversion {
 
   def main(args: Array[String]) {
     Logger.getLogger("org").setLevel(Level.ERROR)
