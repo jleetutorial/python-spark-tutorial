@@ -12,7 +12,6 @@ object TypedDataset {
   def main(args: Array[String]) {
     Logger.getLogger("org").setLevel(Level.ERROR)
     val session = SparkSession.builder().appName("StackOverFlowSurvey").master("local[*]").getOrCreate()
-    import session.implicits._
 
     val dataFrameReader = session.read
 
@@ -21,12 +20,16 @@ object TypedDataset {
       .option("inferSchema", value = true)
       .csv("in/2016-stack-overflow-survey-responses.csv")
 
-    val responseWithSelectedColumns = responses.withColumn("country", responses.col("country"))
-      .withColumn("ageMidPoint", responses.col("age_midpoint").cast("integer"))
-      .withColumn("occupation", responses.col("occupation"))
-      .withColumn("salaryMidPoint", responses.col("salary_midpoint").cast("integer"))
+    val responseWithSelectedColumns = responses.select("country", "age_midpoint", "occupation", "salary_midpoint")
 
-    val typedDataset = responseWithSelectedColumns.as[Response]
+    val responseWithRenamedColumns = responseWithSelectedColumns
+      .withColumn("country", responses.col("country"))
+      .withColumn(AGE_MIDPOINT, responses.col("age_midpoint").cast("integer"))
+      .withColumn("occupation", responses.col("occupation"))
+      .withColumn(SALARY_MIDPOINT, responses.col("salary_midpoint").cast("integer"))
+
+    import session.implicits._
+    val typedDataset = responseWithRenamedColumns.as[Response]
 
     System.out.println("=== Print out schema ===")
     typedDataset.printSchema()
