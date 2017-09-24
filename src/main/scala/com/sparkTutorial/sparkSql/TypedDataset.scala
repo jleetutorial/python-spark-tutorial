@@ -16,7 +16,10 @@ object TypedDataset {
 
     val dataFrameReader = session.read
 
-    val responses = dataFrameReader.option("header", "true").csv("in/2016-stack-overflow-survey-responses.csv")
+    val responses = dataFrameReader
+      .option("header", "true")
+      .option("inferSchema", value = true)
+      .csv("in/2016-stack-overflow-survey-responses.csv")
 
     val responseWithSelectedColumns = responses.withColumn("country", responses.col("country"))
       .withColumn("ageMidPoint", responses.col("age_midpoint").cast("integer"))
