@@ -36,7 +36,7 @@ object RddDatasetConversion {
     for (response <- responseDataset.rdd.collect()) println(response)
   }
 
-  def toInt(split: String): Option[Int] = {
-    if (split.isEmpty) None else Some(Math.round(split.toFloat))
+  def toInt(split: String): Option[Double] = {
+    if (split.isEmpty) None else Some(split.toDouble)
   }
 }
