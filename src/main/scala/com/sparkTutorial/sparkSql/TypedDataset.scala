@@ -12,7 +12,6 @@ object TypedDataset {
   def main(args: Array[String]) {
     Logger.getLogger("org").setLevel(Level.ERROR)
     val session = SparkSession.builder().appName("StackOverFlowSurvey").master("local[*]").getOrCreate()
-
     val dataFrameReader = session.read
 
     val responses = dataFrameReader
@@ -22,14 +21,8 @@ object TypedDataset {
 
     val responseWithSelectedColumns = responses.select("country", "age_midpoint", "occupation", "salary_midpoint")
 
-    val responseWithRenamedColumns = responseWithSelectedColumns
-      .withColumn("country", responses.col("country"))
-      .withColumn(AGE_MIDPOINT, responses.col(AGE_MIDPOINT).cast("integer"))
-      .withColumn("occupation", responses.col("occupation"))
-      .withColumn(SALARY_MIDPOINT, responses.col(SALARY_MIDPOINT).cast("integer"))
-
     import session.implicits._
-    val typedDataset = responseWithRenamedColumns.as[Response]
+    val typedDataset = responseWithSelectedColumns.as[Response]
 
     System.out.println("=== Print out schema ===")
     typedDataset.printSchema()
@@ -44,7 +37,7 @@ object TypedDataset {
     typedDataset.groupBy(typedDataset.col("occupation")).count().show()
 
     System.out.println("=== Print responses with average mid age less than 20 ===")
-    typedDataset.filter(response => response.age_midpoint.isDefined && response.age_midpoint.get < 20).show()
+    typedDataset.filter(response => response.age_midpoint.isDefined && response.age_midpoint.get < 20.0).show()
 
     System.out.println("=== Print the result by salary middle point in descending order ===")
     typedDataset.orderBy(typedDataset.col(SALARY_MIDPOINT).desc).show()
