@@ -6,7 +6,7 @@ def splitComma(line: str):
     return "{}, {}".format(splits[1], splits[2])
 
 if __name__ == "__main__":
-    sc = SparkContext("local", "count")
+    sc = SparkContext("local", "airports")
 
     airports = sc.textFile("in/airports.text")
     airportsInUSA = airports.filter(lambda line : Utils.COMMA_DELIMITER.split(line)[3] == "\"United States\"")
