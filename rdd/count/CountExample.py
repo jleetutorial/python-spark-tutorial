@@ -2,6 +2,7 @@ from pyspark import SparkContext
 
 if __name__ == "__main__":
     sc = SparkContext("local", "count")
+    sc.setLogLevel("ERROR")
     inputWords = ["spark", "hadoop", "spark", "hive", "pig", "cassandra", "hadoop"]
     wordRdd = sc.parallelize(inputWords)
     print("Count: {}".format(wordRdd.count()))

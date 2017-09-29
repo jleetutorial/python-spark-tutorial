@@ -1,6 +1,6 @@
 from pyspark import SparkContext
 
-def isNotHeader(line:str):
+def isNotHeader(line: str):
     return not (line.startswith("host") and "bytes" in line)
 
 if __name__ == "__main__":
