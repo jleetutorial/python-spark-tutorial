@@ -1,11 +1,10 @@
-package com.sparkTutorial.pairRdd.aggregation.reducebykey.housePrice
+from pyspark import SparkContext
 
-object AverageHousePriceProblem {
+if __name__ == "__main__":
 
-  def main(args: Array[String]) {
-
-    /* Create a Spark program to read the house data from in/RealEstate.csv,
-       output the average price for houses with different number of bedrooms.
+    '''
+    Create a Spark program to read the house data from in/RealEstate.csv,
+    output the average price for houses with different number of bedrooms.
 
     The houses dataset contains a collection of recent real estate listings in San Luis Obispo county and
     around it. 
@@ -31,8 +30,6 @@ object AverageHousePriceProblem {
        (2, 325000)
        ...
 
-       3, 1 and 2 mean the number of bedrooms. 325000 means the average price of houses with 3 bedrooms is 325000.
-     */
-  }
+    3, 1 and 2 mean the number of bedrooms. 325000 means the average price of houses with 3 bedrooms is 325000.
 
-}
+    '''
