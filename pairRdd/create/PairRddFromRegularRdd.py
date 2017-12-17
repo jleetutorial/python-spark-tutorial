@@ -1,9 +1,8 @@
-from pyspark import SparkContext
+from pyspark import SparkContext, SparkConf
 
 if __name__ == "__main__":
-
-    sc = SparkContext("local", "create")
-    sc.setLogLevel("ERROR")
+    conf = SparkConf().setAppName("create").setMaster("local")
+    sc = SparkContext(conf = conf)
 
     inputStrings = ["Lily 23", "Jack 29", "Mary 29", "James 8"]
     regularRDDs = sc.parallelize(inputStrings)

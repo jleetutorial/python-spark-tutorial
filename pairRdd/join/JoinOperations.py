@@ -1,9 +1,8 @@
-from pyspark import SparkContext
+from pyspark import SparkContext, SparkConf
 
 if __name__ == "__main__":
-
-    sc = SparkContext("local", "JoinOperations")
-    sc.setLogLevel("ERROR")
+    conf = SparkConf().setAppName("JoinOperations").setMaster("local[1]")
+    sc = SparkContext(conf = conf)
     
     ages = sc.parallelize([("Tom", 29), ("John", 22)])
     addresses = sc.parallelize([("James", "USA"), ("John", "UK")])
