@@ -1,20 +1,18 @@
-from pyspark import SparkContext
+from pyspark import SparkContext, SparkConf
 
 if __name__ == "__main__":
-
-    sc = SparkContext("local", "wordCounts")
-    sc.setLogLevel("ERROR")
+    conf = SparkConf().setAppName("wordCounts").setMaster("local[*]")
+    sc = SparkContext(conf = conf)
+    
     lines = sc.textFile("in/word_count.text")
     wordRdd = lines.flatMap(lambda line: line.split(" "))
 
     wordPairRdd = wordRdd.map(lambda word: (word, 1))
     wordToCountPairs = wordPairRdd.reduceByKey(lambda x, y: x + y)
 
-    countToWordParis = wordToCountPairs.map(lambda wordToCount: (wordToCount[1], wordToCount[0]))
+    sortedWordCountPairs = wordToCountPairs \
+        .sortBy(lambda wordCount: wordCount[1], ascending=False)
 
-    sortedCountToWordParis = countToWordParis.sortByKey(ascending=False)
-
-    sortedWordToCountPairs = sortedCountToWordParis.map(lambda countToWord: (countToWord[1], countToWord[0]))
-
-    for word, count in  sortedWordToCountPairs.collect():
+    for word, count in  sortedWordCountPairs.collect():
         print("{} : {}".format(word, count))
+

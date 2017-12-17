@@ -1,11 +1,15 @@
-import sys
-from pyspark import SparkContext
+from pyspark import SparkContext, SparkConf
 
 if __name__ == "__main__":
-    sc = SparkContext("local", "word count")
-    sc.setLogLevel("ERROR")
+    conf = SparkConf().setAppName("word count").setMaster("local[3]")
+    sc = SparkContext(conf = conf)
+    
     lines = sc.textFile("in/word_count.text")
+    
     words = lines.flatMap(lambda line: line.split(" "))
+    
     wordCounts = words.countByValue()
+    
     for word, count in wordCounts.items():
-        print(word, count)
+        print("{} : {}".format(word, count))
+

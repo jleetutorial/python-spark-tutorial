@@ -1,7 +1,8 @@
-from pyspark import SparkContext
+from pyspark import SparkContext, SparkConf
 
 if __name__ == "__main__":
-    sc = SparkContext("local", "sameHosts")
+    conf = SparkConf().setAppName("sameHosts").setMaster("local[1]")
+    sc = SparkContext(conf = conf)
 
     julyFirstLogs = sc.textFile("in/nasa_19950701.tsv")
     augustFirstLogs = sc.textFile("in/nasa_19950801.tsv")
