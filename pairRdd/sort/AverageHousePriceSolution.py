@@ -1,11 +1,11 @@
+import sys
+sys.path.insert(0, '.')
 from pairRdd.aggregation.reducebykey.housePrice.AvgCount import AvgCount
-from pyspark import SparkContext
-
+from pyspark import SparkContext, SparkConf
 
 if __name__ == "__main__":
-
-    sc = SparkContext("local", "averageHousePriceSolution")
-    sc.setLogLevel("ERROR")
+    conf = SparkConf().setAppName("averageHousePriceSolution").setMaster("local[*]")
+    sc = SparkContext(conf = conf)
 
     lines = sc.textFile("in/RealEstate.csv")
     cleanedLines = lines.filter(lambda line: "Bedrooms" not in line)
