@@ -1,10 +1,12 @@
-from pyspark import SparkContext
+import sys
+sys.path.insert(0, '.')
+from pyspark import SparkContext, SparkConf
 from commons.Utils import Utils
 
 if __name__ == "__main__":
 
-    sc = SparkContext("local", "airports")
-    sc.setLogLevel("ERROR")
+    conf = SparkConf().setAppName("airports").setMaster("local[*]")
+    sc = SparkContext(conf = conf)
 
     lines = sc.textFile("in/airports.text")
 
@@ -15,4 +17,4 @@ if __name__ == "__main__":
     airportsByCountry = countryAndAirportNameAndPair.groupByKey()
 
     for country, airportName in airportsByCountry.collectAsMap().items():
-        print("{}: {}".format(country,list(airportName)))
+        print("{}: {}".format(country, list(airportName)))

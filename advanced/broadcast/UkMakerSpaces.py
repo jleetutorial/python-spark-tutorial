@@ -1,19 +1,21 @@
-from pyspark import SparkContext
+import sys
+sys.path.insert(0, '.')
+from pyspark import SparkContext, SparkConf
 from commons.Utils import Utils
-
-def getPostPrefix(line: str):
-    splits = Utils.COMMA_DELIMITER.split(line)
-    postcode = splits[4]
-    return None if not postcode else postcode.split(" ")[0]
 
 def loadPostCodeMap():
     lines = open("in/uk-postcode.csv", "r").read().split("\n")
     splitsForLines = [Utils.COMMA_DELIMITER.split(line) for line in lines if line != ""]
     return {splits[0]: splits[7] for splits in splitsForLines}
 
+def getPostPrefix(line: str):
+    splits = Utils.COMMA_DELIMITER.split(line)
+    postcode = splits[4]
+    return None if not postcode else postcode.split(" ")[0]
+
 if __name__ == "__main__":
-    sc = SparkContext("local", "UkMakerSpaces")
-    sc.setLogLevel("ERROR")
+    conf = SparkConf().setAppName('UkMakerSpaces').setMaster("local[*]")
+    sc = SparkContext(conf = conf)
 
     postCodeMap = sc.broadcast(loadPostCodeMap())
 

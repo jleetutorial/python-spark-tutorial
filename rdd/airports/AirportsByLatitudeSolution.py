@@ -1,4 +1,6 @@
-from pyspark import SparkContext
+import sys
+sys.path.insert(0, '.')
+from pyspark import SparkContext, SparkConf
 from commons.Utils import Utils
 
 def splitComma(line: str):
@@ -6,7 +8,8 @@ def splitComma(line: str):
     return "{}, {}".format(splits[1], splits[6])
 
 if __name__ == "__main__":
-    sc = SparkContext("local", "airports")
+    conf = SparkConf().setAppName("airports").setMaster("local[*]")
+    sc = SparkContext(conf = conf)
     
     airports = sc.textFile("in/airports.text")
 
