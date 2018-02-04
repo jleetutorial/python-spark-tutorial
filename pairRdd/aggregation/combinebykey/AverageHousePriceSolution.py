@@ -1,9 +1,8 @@
-from pyspark import SparkContext
+from pyspark import SparkContext, SparkConf
 
 if __name__ == "__main__":
-
-    sc = SparkContext("local", "AverageHousePrice")
-    sc.setLogLevel("ERROR")
+    conf = SparkConf().setAppName("AverageHousePrice").setMaster("local")
+    sc = SparkContext(conf = conf)
 
     lines = sc.textFile("in/RealEstate.csv")
     cleanedLines = lines.filter(lambda line: "Bedrooms" not in line)

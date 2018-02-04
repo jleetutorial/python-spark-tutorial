@@ -1,24 +1,26 @@
-from pyspark import SparkContext
+import sys
+sys.path.insert(0, '.')
+from pyspark import SparkContext, SparkConf
+from pairRdd.aggregation.reducebykey.housePrice.AvgCount import AvgCount
 
 if __name__ == "__main__":
-
-    sc = SparkContext("local", "avgHousePrice")
-    sc.setLogLevel("ERROR")
+    conf = SparkConf().setAppName("avgHousePrice").setMaster("local[3]")
+    sc = SparkContext(conf = conf)
 
     lines = sc.textFile("in/RealEstate.csv")
     cleanedLines = lines.filter(lambda line: "Bedrooms" not in line)
 
     housePricePairRdd = cleanedLines.map(lambda line: \
-        (line.split(",")[3], (1, float(line.split(",")[2]))))
+        (line.split(",")[3], AvgCount(1, float(line.split(",")[2]))))
 
     housePriceTotal = housePricePairRdd \
-        .reduceByKey(lambda x, y: (x[0] + y[0], x[1] + y[1]))
+        .reduceByKey(lambda x, y: AvgCount(x.count + y.count, x.total + y.total))
 
     print("housePriceTotal: ")
-    for bedroom, total in housePriceTotal.collect():
-        print("{} : {}".format(bedroom, total))
+    for bedroom, avgCount in housePriceTotal.collect():
+        print("{} : ({}, {})".format(bedroom, avgCount.count, avgCount.total))
 
-    housePriceAvg = housePriceTotal.mapValues(lambda avgCount: avgCount[1] / avgCount[0])
+    housePriceAvg = housePriceTotal.mapValues(lambda avgCount: avgCount.total / avgCount.count)
     print("\nhousePriceAvg: ")
     for bedroom, avg in housePriceAvg.collect():
         print("{} : {}".format(bedroom, avg))
