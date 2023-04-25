@@ -8,4 +8,4 @@ if __name__ == "__main__":
     integerRdd = sc.parallelize(inputIntegers)
    
     product = integerRdd.reduce(lambda x, y: x * y)
-    print("product is :{}".format(product))
+    print("product is : {}".format(product))
